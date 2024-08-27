@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mensajes Recibidos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1>Mensajes Recibidos</h1>
+
+    <!-- Formulario de búsqueda -->
+    <form method="get" action="{% url 'recibidos' %}">
+        <label for="destinatario">Buscar por destinatario:</label>
+        <select id="destinatario" name="destinatario">
+            <option value="">Selecciona un destinatario</option>
+            {% for dest in destinatarios %}
+                <option value="{{ dest }}" {% if dest == destinatario %}selected{% endif %}>{{ dest }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Buscar</button>
+    </form>
+    <!-- Mostrar mensajes -->
+    <ul>
+        {% if mensajes %}
+            {% for mensaje in mensajes %}
+                <li>
+                    <strong>De:</strong> {{ mensaje.remitente }} <br>
+                    <strong>Para:</strong> {{ mensaje.destinatario }} <br>
+                    <strong>Fecha:</strong> {{ mensaje.fecha_envio }} <br>
+                    <strong>Contenido:</strong> {{ mensaje.contenido }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No hay mensajes para el destinatario especificado.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>
